@@ -57,5 +57,43 @@ namespace GlideLog.Models
 
 			return new Tuple<int, int> ( hours, minutes );
 		}
+
+		public async Task<Dictionary<string, (int, int, int)>> GetTotalsByMonthAsync()
+		{
+			// (int, int, int) = (Hours, Minutes, FlightCount)
+			Dictionary<string, (int, int, int)> dateTotals = new();
+
+			await Task.Run(() =>
+			{
+				foreach (FlightEntryModel flight in _flightEntries!)
+				{
+					if (!flight.OmitFromTotals)
+					{
+						int flightCount = flight.FlightCount;
+						int year = flight.DateTime.Year;
+						int minutes = flight.Minutes;
+						int hours = flight.Hours;
+						string monthYear = $"{flight.DateTime.ToString("MMMM")} {year}";
+						if (dateTotals.ContainsKey(monthYear))
+						{
+							int subMins = minutes + dateTotals[monthYear].Item2;
+							int subHours = hours + dateTotals[monthYear].Item1;
+							if (subMins > 60)
+							{
+								subHours++;
+								subMins -= 60;
+							}
+							dateTotals[monthYear] = (subHours, subMins, flightCount + dateTotals[monthYear].Item3);
+						}
+						else
+						{
+							dateTotals.Add(monthYear, (hours, minutes, flightCount));
+						}
+					}
+				}
+			});
+
+			return dateTotals;
+		}
 	}
 }

@@ -21,7 +21,7 @@ namespace GlideLog.Models
 
 			FlightEntryModel? flightEntryModel = obj as FlightEntryModel;
 
-			if ((Object)flightEntryModel == null) return false;
+			if (flightEntryModel == null) return false;
 
 			if(flightEntryModel.ID != ID) return false;
 			if(flightEntryModel.DateTime != DateTime) return false;

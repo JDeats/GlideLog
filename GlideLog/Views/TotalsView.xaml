@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:GlideLog.ViewModels"
+             xmlns:models="clr-namespace:GlideLog.Models"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="GlideLog.Views.TotalsView"
              x:DataType="vm:TotalsViewModel"
@@ -11,7 +12,7 @@
         <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="auto, auto, *">
+    <Grid RowDefinitions="auto, auto, auto, *">
         <HorizontalStackLayout HorizontalOptions="Center">
             <Frame Margin="0,0,10,0">
                 <HorizontalStackLayout>
@@ -28,5 +29,36 @@
                 </HorizontalStackLayout>
             </Frame>
         </HorizontalStackLayout>
+
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" Margin="0,20,0,0">
+            <Frame Margin="0,0,2,0">
+                <Button Text="Date" Padding="0"/>
+            </Frame>
+
+            <Frame Margin="0,0,2,0">
+                <Button Text="Site" Padding="0"/>
+            </Frame>
+
+            <Frame Margin="0,0,0,0">
+                <Button Text="Glider" Padding="0"/>
+            </Frame>
+        </HorizontalStackLayout>
+
+        <ListView ItemsSource="{Binding TotalsByMonth}" Grid.Row="2" SelectionMode="None" Margin="0,20,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:TotalsByMonthModel">
+                    <ViewCell>
+                        <HorizontalStackLayout VerticalOptions="Center">
+                            <Label Text="{Binding Date}" Margin="10,0,10,0"/>
+                            <Label Text="Flights:" Margin="0,0,2,0"/>
+                            <Label Text="{Binding TotalFlights}" Margin="0,0,10,0"/>
+                            <Label Text="Hours:" Margin="0,0,2,0"/>
+                            <Label Text="{Binding TotalHours, StringFormat='{0:D2}:'}" />
+                            <Label Text="{Binding TotalMinutes, StringFormat='{0:D2}'}" />
+                        </HorizontalStackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </ContentPage>
