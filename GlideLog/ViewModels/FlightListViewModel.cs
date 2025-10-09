@@ -29,8 +29,7 @@ namespace GlideLog.ViewModels
             await Shell.Current.GoToAsync(nameof(AddFlightEntryView));
         }
 
-        [RelayCommand]
-        public async Task Appearing()
+        public async Task OnAppearingAsync()
         {
             try
             {
