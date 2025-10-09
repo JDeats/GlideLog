@@ -8,10 +8,6 @@
              x:DataType="vm:TotalsViewModel"
              Title="Totals">
 
-    <ContentPage.Behaviors>
-        <mct:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
-    </ContentPage.Behaviors>
-
     <Grid RowDefinitions="auto, auto, auto, *">
         <HorizontalStackLayout HorizontalOptions="Center">
             <Border Margin="0,0,10,0">

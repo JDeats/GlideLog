@@ -29,8 +29,7 @@ namespace GlideLog.ViewModels
 			TotalsByMonth = new ObservableCollection<TotalsByMonthModel>();
 		}
 
-		[RelayCommand]
-		public async Task Appearing()
+		public async Task OnAppearingAsync()
 		{
 			try
 			{
@@ -38,6 +37,7 @@ namespace GlideLog.ViewModels
 				FlightCount = await _totalsModel.GetTotalFlightsAsync();
 				Tuple<int, int> time = await _totalsModel.GetTotalFlightsHoursAsync();
 				var totalsByMonthDic = await _totalsModel.GetTotalsByMonthAsync();
+				TotalsByMonth = [];
 				foreach (var kvp in totalsByMonthDic)
 				{
 					TotalsByMonth.Add(new TotalsByMonthModel() { Date = kvp.Key, TotalHours = kvp.Value.Item1, TotalMinutes = kvp.Value.Item2, TotalFlights = kvp.Value.Item3 });
