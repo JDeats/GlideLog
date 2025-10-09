@@ -15,26 +15,30 @@ namespace GlideLog.Models
 		public bool OmitFromTotals { get; set; }
 		public string Notes { get; set; } = string.Empty;
 
-		public override bool Equals(object? obj)
-		{
-			if (obj == null) return false;
+		//public override bool Equals(object? obj)
+		//{
+		//	if (obj == null) return false;
 
-			FlightEntryModel? flightEntryModel = obj as FlightEntryModel;
 
-			if (flightEntryModel == null) return false;
+		//	if (obj is not FlightEntryModel flightEntryModel) return false;
 
-			if(flightEntryModel.ID != ID) return false;
-			if(flightEntryModel.DateTime != DateTime) return false;
-			if(flightEntryModel.Site != Site) return false;
-			if(flightEntryModel.Notes != Notes) return false;
-			if(flightEntryModel.Glider != Glider) return false;
-			if(flightEntryModel.Hours != Hours) return false;
-			if (flightEntryModel.Minutes != Minutes) return false;
-			if(FlightCount != FlightCount) return false;
-			if(OmitFromTotals != OmitFromTotals) return false;
+		//	if (flightEntryModel.ID != ID) return false;
+		//	if(flightEntryModel.DateTime != DateTime) return false;
+		//	if(flightEntryModel.Site != Site) return false;
+		//	if(flightEntryModel.Notes != Notes) return false;
+		//	if(flightEntryModel.Glider != Glider) return false;
+		//	if(flightEntryModel.Hours != Hours) return false;
+		//	if (flightEntryModel.Minutes != Minutes) return false;
+		//	if(FlightCount != FlightCount) return false;
+		//	if(OmitFromTotals != OmitFromTotals) return false;
 
-			return true;
-		}
+		//	return true;
+		//}
+
+		//public override int GetHashCode()
+		//{
+		//	throw new NotImplementedException();
+		//}
 	}
 
 	public class CsvFlightEntry

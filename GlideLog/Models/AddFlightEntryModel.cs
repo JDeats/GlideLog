@@ -1,4 +1,5 @@
 ﻿using GlideLog.Data;
+using System.Diagnostics;
 
 namespace GlideLog.Models
 {
@@ -43,7 +44,7 @@ namespace GlideLog.Models
 			}
 			catch (Exception ex)
 			{
-				
+				Debug.WriteLine(ex);
 			}
 			return sites;
 		}
@@ -64,7 +65,7 @@ namespace GlideLog.Models
 			}
 			catch (Exception ex)
 			{
-
+				Debug.WriteLine(ex);
 			}
 			return gliders;
 		}

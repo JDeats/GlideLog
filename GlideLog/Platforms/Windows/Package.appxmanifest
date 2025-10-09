@@ -4,13 +4,11 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
-  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
-  IgnorableNamespaces="uap rescap com desktop">
+  IgnorableNamespaces="uap rescap">
 
   <Identity Name="maui-package-name-placeholder" Publisher="CN=User Name" Version="0.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="D936C097-D47C-422B-B16F-B321C98BB215" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="5002A6AD-4C3E-498B-9ABE-258A980155EA" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>$placeholder$</DisplayName>
@@ -38,24 +36,6 @@
         <uap:DefaultTile Square71x71Logo="$placeholder$.png" Wide310x150Logo="$placeholder$.png" Square310x310Logo="$placeholder$.png" />
         <uap:SplashScreen Image="$placeholder$.png" />
       </uap:VisualElements>
-	  <Extensions>
-
-        <!-- Specify which CLSID to activate when notification is clicked -->
-        <desktop:Extension Category="windows.toastNotificationActivation">
-            <desktop:ToastNotificationActivation ToastActivatorCLSID="6e919706-2634-4d97-a93c-2213b2acc334" /> 
-        </desktop:Extension>
-
-        <!-- Register COM CLSID -->
-        <com:Extension Category="windows.comServer">
-            <com:ComServer>
-                <com:ExeServer Executable="GlideLog.exe" DisplayName="$targetnametoken$" Arguments="----AppNotificationActivated:">
-                    <com:Class Id="6e919706-2634-4d97-a93c-2213b2acc334" />
-                </com:ExeServer>
-            </com:ComServer>
-        </com:Extension>
-
-      </Extensions>
- 
     </Application>
   </Applications>
 

@@ -18,34 +18,34 @@ namespace GlideLog.ViewModels
 		}
 
 		[ObservableProperty]
-		public FlightEntryModel flight;
+		public partial FlightEntryModel Flight { get; set; }
 
 		[ObservableProperty]
-		string date = DateTime.Now.ToString("M/d/yyyy");
+		public partial string Date { get; set; } = DateTime.Now.ToString("M/d/yyyy");
 
 		[ObservableProperty]
-		TimeSpan time = DateTime.Now.TimeOfDay;
+		public partial TimeSpan Time { get; set; } = DateTime.Now.TimeOfDay;
 
 		[ObservableProperty]
-		string site = string.Empty;
+		public partial string Site { get; set; } = string.Empty;
 
 		[ObservableProperty]
-		string glider = string.Empty;
+		public partial string Glider { get; set; } = string.Empty;
 
 		[ObservableProperty]
-		int flightCount = 1;
+		public partial int FlightCount { get; set; } = 1;
 
 		[ObservableProperty]
-		int hours;
+		public partial int Hours { get; set; }
 
 		[ObservableProperty]
-		int minutes;
+		public partial int Minutes { get; set; }
 
 		[ObservableProperty]
-		bool omitFromTotals;
+		public partial bool OmitFromTotals { get; set; }
 
 		[ObservableProperty]
-		string notes = string.Empty;
+		public partial string Notes { get; set; } = string.Empty;
 
 		[RelayCommand]
 		public void Appearing()

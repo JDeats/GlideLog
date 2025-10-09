@@ -1,8 +1,9 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GlideLog.Models;
+using GlideLog.Views;
 using System.Collections.ObjectModel;
 using static GlideLog.ViewModels.UserEntryPopupViewModel;
 
@@ -17,31 +18,31 @@ namespace GlideLog.ViewModels
 		private readonly IPopupService _popupService;
 
 		[ObservableProperty]
-        string date = DateTime.Now.ToString("M/d/yyyy");
+        public partial string Date { get; set; } = DateTime.Now.ToString("M/d/yyyy");
 
         [ObservableProperty]
-        TimeSpan time = DateTime.Now.TimeOfDay;
+		public partial TimeSpan Time { get; set; } = DateTime.Now.TimeOfDay;
 
 		[ObservableProperty]
-        string site = string.Empty;
+		public partial string Site { get; set; } = string.Empty;
 
         [ObservableProperty]
-        string glider = string.Empty;
+		public partial string Glider { get; set; } = string.Empty;
 
         [ObservableProperty]
-        int flightCount = 1;
+		public partial int FlightCount { get; set; } = 1;
 
         [ObservableProperty]
-        int hours;
+		public partial int Hours { get; set; }
 
-        [ObservableProperty]
-        int minutes;
+		[ObservableProperty]
+		public partial int Minutes { get; set; }
 
-        [ObservableProperty]
-        bool omitFromTotals;
+		[ObservableProperty]
+		public partial bool OmitFromTotals { get; set; }
 
-        [ObservableProperty]
-        string notes = string.Empty;
+		[ObservableProperty]
+		public partial string Notes { get; set; } = string.Empty;
 
 		private ObservableCollection<string> _gliders = new ObservableCollection<string>();
 
@@ -156,23 +157,43 @@ namespace GlideLog.ViewModels
                 switch (entryPopupType)
                 {
                     case EntryPopupType.Site:
-						string? newSite = Convert.ToString(await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(onPresenting: viewModel => viewModel.EntryLabel = "Site:"));
+						//string? newSite = Convert.ToString(await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(onPresenting: viewModel => viewModel.EntryLabel = "Site:"));
 
-						if (!string.IsNullOrEmpty(newSite))
-						{
-							Sites.Add(newSite);
-							Site = newSite;
-						}
+						//var popup = new UserEntryPopup();
+						//if (popup.BindingContext is UserEntryPopupViewModel vm)
+						//	vm.EntryLabel = "Site:";
+
+						//string? newSite = await _popupService.ShowPopupAsync<string>(popup);
+
+						//if (!string.IsNullOrEmpty(newSite))
+						//{
+						//	Sites.Add(newSite);
+						//	Site = newSite;
+						//}
+
+						//UserEntryPopupView view = new UserEntryPopupView();
+
+						await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current);
+
 						break;
 
                     case EntryPopupType.Glider:
-						string? newGlider = Convert.ToString(await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(onPresenting: viewModel => viewModel.EntryLabel = "Glider:"));
+						//string? newGlider = Convert.ToString(await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(onPresenting: viewModel => viewModel.EntryLabel = "Glider:"));
 
-						if (!string.IsNullOrEmpty(newGlider))
-						{
-							Gliders.Add(newGlider);
-							Glider = newGlider;
-						}
+						await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current);
+
+
+						//var popup = new UserEntryPopup();
+						//if (popup.BindingContext is UserEntryPopupViewModel vm)
+						//	vm.EntryLabel = "Glider:";
+
+						//string? newGlider = await _popupService.ShowPopupAsync<string>(popup);
+
+						//if (!string.IsNullOrEmpty(newGlider))
+						//{
+						//	Gliders.Add(newGlider);
+						//	Glider = newGlider;
+						//}
 						break;
 				}
             }

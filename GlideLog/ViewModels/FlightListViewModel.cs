@@ -15,7 +15,7 @@ namespace GlideLog.ViewModels
 		private bool _firstLoad = true;
 
 		[ObservableProperty]
-        ObservableCollection<FlightEntryModel> flights;
+        public partial ObservableCollection<FlightEntryModel> Flights { get; set; }
 
         public FlightListViewModel(FlightListModel flightListModel)
         {

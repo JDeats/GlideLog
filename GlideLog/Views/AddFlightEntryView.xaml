@@ -5,64 +5,62 @@
              xmlns:vm="clr-namespace:GlideLog.ViewModels"
              x:DataType="vm:AddFlightEntryViewModel"
              Title="Add Flight">
-    <!--Grid ColumnDefinitions=".25*, .75*"-->
+    
     <VerticalStackLayout HorizontalOptions="Center">
-        <Frame Padding="5">
+        <Border Padding="5">
             <Grid ColumnDefinitions="auto, 110, auto, 85">
                 <Label Text="Date:" VerticalOptions="Center"/>
                 <DatePicker Date="{Binding Date}" Margin="5,0,10,0" Grid.Column="1" HorizontalOptions="Center"/>
                 <Label Text="Time:" VerticalOptions="Center" Margin="0,0,5,0" Grid.Column="2"/>
                 <TimePicker Time="{Binding Time}" Grid.Column="3" HorizontalOptions="Center"/>
             </Grid>
-        </Frame>
+        </Border>
 
-        <Frame Padding="5">
+        <Border Padding="5">
             <HorizontalStackLayout>
                 <Label Text="Site:" VerticalOptions="Center" Margin="0,0,5,0"/>
                 <!--Entry Text="{Binding Site}" WidthRequest="235"/-->
                 <Picker x:Name="SitePicker" Title="Select a Site" ItemsSource="{Binding Sites}" SelectedItem="{Binding Site}" MinimumWidthRequest="235" Unfocused="SitePicker_Unfocused"/>
             </HorizontalStackLayout>
-        </Frame>
+        </Border>
 
-        <Frame Padding="5">
+        <Border Padding="5">
             <HorizontalStackLayout>
                 <Label Text="Glider:" VerticalOptions="Center" Margin="0,0,5,0"/>
                 <Picker x:Name="GliderPicker" Title="Select a Glider" ItemsSource="{Binding Gliders}" SelectedItem="{Binding Glider}" MinimumWidthRequest="235" Unfocused="GliderPicker_Unfocused"/>
             </HorizontalStackLayout>
-        </Frame>
+        </Border>
 
-        <Frame Padding="5">
+        <Border Padding="5">
             <HorizontalStackLayout>
                 <Label Text="Flight Count:" VerticalOptions="Center" Margin="0,0,5,0"/>
                 <Entry Text="{Binding FlightCount}" Grid.Column="1" Keyboard="Numeric" WidthRequest="175"/>
             </HorizontalStackLayout>
-        </Frame>
+        </Border>
 
-        <Frame Padding="5">
+        <Border Padding="5">
             <Grid ColumnDefinitions="auto, 82, auto, 75">
                 <Label Text="Hours:" VerticalOptions="Center"/>
                 <Entry Text="{Binding Hours}" Grid.Column="1" Margin="5,0,10,0" Keyboard="Numeric"/>
                 <Label Text="Minutes:" Grid.Column="2" VerticalOptions="Center" Margin="0,0,5,0"/>
                 <Entry Text="{Binding Minutes}" Grid.Column="3" Keyboard="Numeric"/>
             </Grid>
-        </Frame>
+        </Border>
 
-        <Frame Padding="5">
+        <Border Padding="5">
             <HorizontalStackLayout>
                 <Label Text="OmitFromTotals:" VerticalOptions="Center" Margin="0,0,5,0"/>
                 <CheckBox  IsChecked="{Binding OmitFromTotals}" Grid.Column="1" />
             </HorizontalStackLayout>
-        </Frame>
+        </Border>
 
-        <Frame Padding="5" HeightRequest="200">
+        <Border Padding="5" HeightRequest="200">
             <HorizontalStackLayout>
                 <Label Text="Notes:"  Margin="0,10,5,0"/>
                 <Editor Text="{Binding Notes}" Grid.Column="1" WidthRequest="220"/>
             </HorizontalStackLayout>
-        </Frame>
+        </Border>
 
         <Button Text="Save" Command="{Binding AddFlightEntryCommand}" Grid.ColumnSpan="2" Margin="0,20,0,0"/>
     </VerticalStackLayout>
-        
-    <!--/Grid-->
 </ContentPage>

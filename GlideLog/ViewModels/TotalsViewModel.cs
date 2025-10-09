@@ -12,16 +12,16 @@ namespace GlideLog.ViewModels
 		private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
 		[ObservableProperty]
-		int flightCount;
+		public partial int FlightCount { get; set; }
 
 		[ObservableProperty]
-		int hours;
+		public partial int Hours { get; set; }
 
 		[ObservableProperty]
-		int minutes;
+		public partial int Minutes { get; set; }
 
 		[ObservableProperty]
-		ObservableCollection<TotalsByMonthModel> totalsByMonth;
+		public partial ObservableCollection<TotalsByMonthModel> TotalsByMonth { get; set; }
 
 		public TotalsViewModel(TotalsModel totalsModel)
 		{

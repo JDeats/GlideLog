@@ -1,24 +1,24 @@
-﻿using CommunityToolkit.Maui;
+﻿using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 using GlideLog.Data;
 using GlideLog.Models;
 using GlideLog.ViewModels;
 using GlideLog.Views;
-using Microsoft.Extensions.Logging;
 
 namespace GlideLog
 {
-	public static class MauiProgram
-	{
-		public static MauiApp CreateMauiApp()
-		{
+    public static class MauiProgram
+    {
+        public static MauiApp CreateMauiApp()
+        {
 			var builder = MauiApp.CreateBuilder();
 			builder
 				.UseMauiApp<App>()
-                .UseMauiCommunityToolkit(options =>
+				.UseMauiCommunityToolkit(options =>
 				{
 					options.SetShouldEnableSnackbarOnWindows(true);
 				})
-                .ConfigureFonts(fonts =>
+				.ConfigureFonts(fonts =>
 				{
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
@@ -33,11 +33,11 @@ namespace GlideLog
 			builder.Services.AddSingleton<FlightListViewModel>();
 			builder.Services.AddSingleton<FlightListModel>();
 
-            builder.Services.AddTransient<AddFlightEntryView>();
+			builder.Services.AddTransient<AddFlightEntryView>();
 			builder.Services.AddTransient<AddFlightEntryViewModel>();
 			builder.Services.AddTransient<AddFlightEntryModel>();
 
-            builder.Services.AddSingleton<TotalsView>();
+			builder.Services.AddSingleton<TotalsView>();
 			builder.Services.AddSingleton<TotalsViewModel>();
 			builder.Services.AddSingleton<TotalsModel>();
 
@@ -49,5 +49,5 @@ namespace GlideLog
 
 			return builder.Build();
 		}
-	}
+    }
 }

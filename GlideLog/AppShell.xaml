@@ -10,7 +10,7 @@
 
     <TabBar>
         <ShellContent
-            Title="Flights"
+            Title="Flight List"
             ContentTemplate="{DataTemplate views:FlightListView}"
             Route="FlightView" />
 
@@ -19,4 +19,5 @@
             ContentTemplate="{DataTemplate views:TotalsView}"
             Route="TotalView" />
     </TabBar>
+
 </Shell>

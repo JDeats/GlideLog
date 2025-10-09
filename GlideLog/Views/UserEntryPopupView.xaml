@@ -1,28 +1,20 @@
-<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-               x:Class="GlideLog.Views.UserEntryPopupView"
-               xmlns:vm="clr-namespace:GlideLog.ViewModels"
-               x:DataType="vm:UserEntryPopupViewModel"
-               CanBeDismissedByTappingOutsideOfPopup="False"
-               Color="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}">
-
-    <toolkit:Popup.Resources>
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-        </Style>
-    </toolkit:Popup.Resources>
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GlideLog.Views.UserEntryPopupView"
+             xmlns:vm="clr-namespace:GlideLog.ViewModels"
+             x:DataType="vm:UserEntryPopupViewModel">
 
     <Grid RowDefinitions="auto, auto, *" >
         <HorizontalStackLayout Grid.Row="0" Margin="10,10,10,0">
             <Label Text="{Binding EntryLabel}" VerticalOptions="Center" Margin="0,0,5,0"/>
             <Entry Text="{Binding UserText}" MinimumWidthRequest="210"/>
         </HorizontalStackLayout>
-        
+
         <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10" Grid.Row="1">
-            <Button Text="OK" Clicked="OKButton_Clicked" Margin="0,0,10,0"/>
-            <Button Text="Cancel" Clicked="CancelButton_Clicked"/>
+            <Button Text="OK" Command="{Binding SaveCommand}" Margin="0,0,10,0"/>
+            <Button Text="Cancel" Command="{Binding CancelCommand}"/>
         </HorizontalStackLayout>
     </Grid>
 
-</toolkit:Popup>
+</ContentView>
