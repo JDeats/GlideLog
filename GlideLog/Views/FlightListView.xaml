@@ -31,10 +31,9 @@
                         </SwipeView.RightItems>
 
                         <Border Padding="12" Margin="5,1">
-                            <!--Border.GestureRecognizer>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FlightListViewModel}}, Path=EditFlightCommand}" CommandParameter="{Binding .}"/>
-                            </Border.GestureRecognizer-->
-
+                            </Border.GestureRecognizers>
                             <VerticalStackLayout>
                                 <Grid RowDefinitions="auto, auto, auto" ColumnDefinitions="auto, *">
                                     <HorizontalStackLayout>

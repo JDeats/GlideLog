@@ -47,8 +47,7 @@ namespace GlideLog.ViewModels
 		[ObservableProperty]
 		public partial string Notes { get; set; } = string.Empty;
 
-		[RelayCommand]
-		public void Appearing()
+		public async Task OnAppearingAsync()
 		{
 			try
 			{
@@ -66,7 +65,7 @@ namespace GlideLog.ViewModels
 			{
 				string message = $"Failed To Load the Flight Selected: {ex.Message}";
 				var toast = Toast.Make(message);
-				toast.Show(_cancellationTokenSource.Token);
+				await toast.Show(_cancellationTokenSource.Token);
 			}
 		}
 

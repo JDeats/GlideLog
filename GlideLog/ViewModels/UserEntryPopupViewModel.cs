@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Maui.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -8,7 +6,6 @@ namespace GlideLog.ViewModels
 {
 	public partial class UserEntryPopupViewModel : ObservableObject, IQueryAttributable
 	{
-		//private NewSitePopupModel _newSitePopupModel;
 		private readonly IPopupService _popupService;
 
 		public enum EntryPopupType
@@ -30,7 +27,6 @@ namespace GlideLog.ViewModels
 
 		public UserEntryPopupViewModel(IPopupService popupService)
 		{
-			//_newSitePopupModel = newSitePopupModel;
 			_popupService = popupService;
 		}
 
