@@ -1,18 +1,20 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GlideLog.Models;
 using GlideLog.Views;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using static GlideLog.ViewModels.UserEntryPopupViewModel;
 
 namespace GlideLog.ViewModels
 {
 	public partial class AddFlightEntryViewModel : ObservableObject
 	{
-        private AddFlightEntryModel _addFlightEntryModel;
-		private CancellationTokenSource tokenSource = new CancellationTokenSource();
+        private readonly AddFlightEntryModel _addFlightEntryModel;
+		private readonly CancellationTokenSource tokenSource = new();
         private const string newSiteText = "Add New Site";
 		private const string newGliderText = "Add New Glider";
 		private readonly IPopupService _popupService;
@@ -44,7 +46,7 @@ namespace GlideLog.ViewModels
 		[ObservableProperty]
 		public partial string Notes { get; set; } = string.Empty;
 
-		private ObservableCollection<string> _gliders = new ObservableCollection<string>();
+		private ObservableCollection<string> _gliders = [];
 
 		public ObservableCollection<string> Gliders
 		{
@@ -52,7 +54,7 @@ namespace GlideLog.ViewModels
 			set => _gliders = value;
 		}
 
-		private ObservableCollection<string> _sites = new ObservableCollection<string>();
+		private ObservableCollection<string> _sites = [];
 
 		public ObservableCollection<string> Sites
 		{
@@ -157,49 +159,35 @@ namespace GlideLog.ViewModels
                 switch (entryPopupType)
                 {
                     case EntryPopupType.Site:
-						//string? newSite = Convert.ToString(await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(onPresenting: viewModel => viewModel.EntryLabel = "Site:"));
-
-						//var popup = new UserEntryPopup();
-						//if (popup.BindingContext is UserEntryPopupViewModel vm)
-						//	vm.EntryLabel = "Site:";
-
-						//string? newSite = await _popupService.ShowPopupAsync<string>(popup);
-
-						//if (!string.IsNullOrEmpty(newSite))
-						//{
-						//	Sites.Add(newSite);
-						//	Site = newSite;
-						//}
-
-						//UserEntryPopupView view = new UserEntryPopupView();
-
-						await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current);
-
+						var siteParameters = new Dictionary<string, object>
+						{
+							[nameof(UserEntryPopupViewModel.EntryLabel)] = "Site:"
+						};
+						IPopupResult<string>? siteResult = (IPopupResult<string>?)await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current, options: null, siteParameters);
+						if (siteResult != null && !string.IsNullOrEmpty(siteResult.Result))
+						{
+							Sites.Add(siteResult.Result);
+							Site = siteResult.Result;
+						}
 						break;
 
                     case EntryPopupType.Glider:
-						//string? newGlider = Convert.ToString(await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(onPresenting: viewModel => viewModel.EntryLabel = "Glider:"));
-
-						await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current);
-
-
-						//var popup = new UserEntryPopup();
-						//if (popup.BindingContext is UserEntryPopupViewModel vm)
-						//	vm.EntryLabel = "Glider:";
-
-						//string? newGlider = await _popupService.ShowPopupAsync<string>(popup);
-
-						//if (!string.IsNullOrEmpty(newGlider))
-						//{
-						//	Gliders.Add(newGlider);
-						//	Glider = newGlider;
-						//}
+						var gliderParameters = new Dictionary<string, object>
+						{
+							[nameof(UserEntryPopupViewModel.EntryLabel)] = "Glider:"
+						};
+						IPopupResult<string>? gliderResult = (IPopupResult<string>?)await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current, options: null, gliderParameters);
+						if (gliderResult != null && !string.IsNullOrEmpty(gliderResult.Result))
+						{
+							Gliders.Add(gliderResult.Result);
+							Glider = gliderResult.Result;
+						}
 						break;
 				}
             }
             catch (Exception ex)
             {
-                string message = ex.Message;
+                Debug.WriteLine(ex.Message);
             }
 		}
 	}

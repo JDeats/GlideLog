@@ -3,17 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GlideLog.Views.UserEntryPopupView"
              xmlns:vm="clr-namespace:GlideLog.ViewModels"
-             x:DataType="vm:UserEntryPopupViewModel">
+             x:DataType="vm:UserEntryPopupViewModel"
+             Background="#212121">
 
-    <Grid RowDefinitions="auto, auto, *" >
-        <HorizontalStackLayout Grid.Row="0" Margin="10,10,10,0">
+    <Grid RowDefinitions="auto, auto">
+        <HorizontalStackLayout Grid.Row="0" Margin="-22,0,0,0" >
             <Label Text="{Binding EntryLabel}" VerticalOptions="Center" Margin="0,0,5,0"/>
-            <Entry Text="{Binding UserText}" MinimumWidthRequest="210"/>
+            <Entry Text="{Binding UserText}" Background="#404040" WidthRequest="210" Placeholder="{Binding PlaceholderText}"/>
         </HorizontalStackLayout>
 
         <HorizontalStackLayout HorizontalOptions="Center" Margin="0,10" Grid.Row="1">
-            <Button Text="OK" Command="{Binding SaveCommand}" Margin="0,0,10,0"/>
-            <Button Text="Cancel" Command="{Binding CancelCommand}"/>
+            <Button Text="OK" Command="{Binding SaveCommand}" Margin="0,0,10,0" WidthRequest="75"/>
+            <Button Text="Cancel" Command="{Binding CancelCommand}" WidthRequest="75"/>
         </HorizontalStackLayout>
     </Grid>
 

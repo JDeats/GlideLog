@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace GlideLog.ViewModels
 {
-	public partial class UserEntryPopupViewModel : ObservableObject
+	public partial class UserEntryPopupViewModel : ObservableObject, IQueryAttributable
 	{
 		//private NewSitePopupModel _newSitePopupModel;
 		private readonly IPopupService _popupService;
@@ -21,6 +21,9 @@ namespace GlideLog.ViewModels
 		public partial string EntryLabel { get; set; } = string.Empty;
 
 		[ObservableProperty]
+		public partial string PlaceholderText { get; set; } = string.Empty;
+
+		[ObservableProperty]
 		public partial string UserText { get; set; } = string.Empty;
 
 		public IPopupService PopupService => _popupService;
@@ -29,6 +32,14 @@ namespace GlideLog.ViewModels
 		{
 			//_newSitePopupModel = newSitePopupModel;
 			_popupService = popupService;
+		}
+
+		public void ApplyQueryAttributes(IDictionary<string, object> query)
+		{
+			if (query.TryGetValue(nameof(EntryLabel), out var val) && val is string s)
+				EntryLabel = s;
+
+			PlaceholderText = $"Enter New {EntryLabel[..^1]}...";
 		}
 
 		[RelayCommand]

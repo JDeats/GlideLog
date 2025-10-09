@@ -9,17 +9,17 @@ namespace GlideLog.Models
 {
 	public class FlightListModel
 	{
-		private FlightDatabase _database;
-		private CancellationTokenSource cts = new CancellationTokenSource();
+		private readonly FlightDatabase _database;
+		private readonly CancellationTokenSource cts;
 
         public FlightListModel(FlightDatabase database)
         {
 			_database = database;
+			cts = new();
 		}
 
 		public async Task<List<FlightEntryModel>> GetFlightsFromDataBase()
 		{
-			List<FlightEntryModel> dbFlights = new();
 			return await _database.GetFlightsAsync();
 		}
 
