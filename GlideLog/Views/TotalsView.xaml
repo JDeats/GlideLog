@@ -8,7 +8,7 @@
              x:DataType="vm:TotalsViewModel"
              Title="Totals">
 
-    <Grid RowDefinitions="auto, auto, auto, *">
+    <Grid RowDefinitions="auto, auto, *">
         <HorizontalStackLayout HorizontalOptions="Center">
             <Border Margin="0,0,10,0">
                 <HorizontalStackLayout>
