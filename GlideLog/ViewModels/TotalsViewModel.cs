@@ -2,14 +2,16 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GlideLog.Models;
+using GlideLog.Views;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace GlideLog.ViewModels
 {
 	public partial class TotalsViewModel : ObservableObject
 	{
-		private TotalsModel _totalsModel;
-		private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+		private readonly TotalsModel _totalsModel;
+		private readonly CancellationTokenSource _cancellationTokenSource;
 
 		[ObservableProperty]
 		public partial int FlightCount { get; set; }
@@ -23,10 +25,18 @@ namespace GlideLog.ViewModels
 		[ObservableProperty]
 		public partial ObservableCollection<TotalsByMonthModel> TotalsByMonth { get; set; }
 
+		[ObservableProperty]
+		public partial ObservableCollection<TotalsBySiteModel> TotalsBySite { get; set; }
+
+		[ObservableProperty]
+		public partial View TotalListSelection { get; set; } = new TotalsByMonthView();
+
 		public TotalsViewModel(TotalsModel totalsModel)
 		{
 			_totalsModel = totalsModel;
-			TotalsByMonth = new ObservableCollection<TotalsByMonthModel>();
+			TotalsByMonth = [];
+			TotalsBySite = [];
+			_cancellationTokenSource = new();
 		}
 
 		public async Task OnAppearingAsync()
@@ -36,14 +46,35 @@ namespace GlideLog.ViewModels
 				await _totalsModel.GetFlightEntriesAsync();
 				FlightCount = await _totalsModel.GetTotalFlightsAsync();
 				Tuple<int, int> time = await _totalsModel.GetTotalFlightsHoursAsync();
-				var totalsByMonthDic = await _totalsModel.GetTotalsByMonthAsync();
-				TotalsByMonth = [];
-				foreach (var kvp in totalsByMonthDic)
-				{
-					TotalsByMonth.Add(new TotalsByMonthModel() { Date = kvp.Key, TotalHours = kvp.Value.Item1, TotalMinutes = kvp.Value.Item2, TotalFlights = kvp.Value.Item3 });
-				}
 				Hours = time.Item1;
 				Minutes = time.Item2;
+
+				// Totals By Month
+				var totalsByMonthDic = await _totalsModel.GetTotalsByMonthAsync();
+				var monthlyList = totalsByMonthDic
+					.Reverse()
+					.Select(kvp => new TotalsByMonthModel
+					{
+						Date = kvp.Key,
+						TotalHours = kvp.Value.Item1,
+						TotalMinutes = kvp.Value.Item2,
+						TotalFlights = kvp.Value.Item3
+					});
+				monthlyList = monthlyList.OrderByDescending(item => DateTime.ParseExact(item.Date, "MMMM yyyy", CultureInfo.InvariantCulture));
+				TotalsByMonth = new ObservableCollection<TotalsByMonthModel>(monthlyList);
+
+				// Totals By Site
+				var totalsBySiteDic = await _totalsModel.GetTotalsBySiteAsync();
+				var siteList = totalsBySiteDic
+					.Reverse()
+					.Select(kvp => new TotalsBySiteModel
+					{
+						Site = kvp.Key,
+						TotalHours = kvp.Value.Item1,
+						TotalMinutes = kvp.Value.Item2,
+						TotalFlights = kvp.Value.Item3
+					});
+				TotalsBySite = new ObservableCollection<TotalsBySiteModel>(siteList);
 			}
 			catch (Exception ex)
 			{
@@ -52,6 +83,12 @@ namespace GlideLog.ViewModels
 				await toast.Show(_cancellationTokenSource.Token);
 			}
 		}
+
+		[RelayCommand]
+		public void ShowByMonthView() => TotalListSelection = new TotalsByMonthView();
+
+		[RelayCommand]
+		public void ShowBySiteView() => TotalListSelection = new TotalsBySiteView();
 
 	}
 }

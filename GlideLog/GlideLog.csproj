@@ -87,6 +87,12 @@
 	  <MauiXaml Update="Views\FlightListView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\TotalsByMonthView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\TotalsBySiteView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\TotalsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
