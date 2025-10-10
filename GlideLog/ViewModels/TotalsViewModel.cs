@@ -23,6 +23,9 @@ namespace GlideLog.ViewModels
 		public partial int Minutes { get; set; }
 
 		[ObservableProperty]
+		public partial ObservableCollection<TotalsByGliderModel> TotalsByGlider { get; set; }
+
+		[ObservableProperty]
 		public partial ObservableCollection<TotalsByMonthModel> TotalsByMonth { get; set; }
 
 		[ObservableProperty]
@@ -75,6 +78,19 @@ namespace GlideLog.ViewModels
 						TotalFlights = kvp.Value.Item3
 					});
 				TotalsBySite = new ObservableCollection<TotalsBySiteModel>(siteList);
+
+				// Totals By Glider
+				var totalsByGliderDic = await _totalsModel.GetTotalsByGliderAsync();
+				var gliderList = totalsByGliderDic
+					.Reverse()
+					.Select(kvp => new TotalsByGliderModel
+					{
+						Glider = kvp.Key,
+						TotalHours = kvp.Value.Item1,
+						TotalMinutes = kvp.Value.Item2,
+						TotalFlights = kvp.Value.Item3
+					});
+				TotalsByGlider = new ObservableCollection<TotalsByGliderModel>(gliderList);
 			}
 			catch (Exception ex)
 			{
@@ -89,6 +105,9 @@ namespace GlideLog.ViewModels
 
 		[RelayCommand]
 		public void ShowBySiteView() => TotalListSelection = new TotalsBySiteView();
+
+		[RelayCommand]
+		public void ShowByGliderView() => TotalListSelection = new TotalsByGliderView();
 
 	}
 }

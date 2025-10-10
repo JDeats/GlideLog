@@ -133,5 +133,43 @@ namespace GlideLog.Models
 
 			return siteTotals;
 		}
+
+		public async Task<Dictionary<string, (int, int, int)>> GetTotalsByGliderAsync()
+		{
+			// (int, int, int) = (Hours, Minutes, FlightCount)
+			Dictionary<string, (int, int, int)> gliderTotals = [];
+
+			await Task.Run(() =>
+			{
+				foreach (FlightEntryModel flight in _flightEntries!)
+				{
+					if (!flight.OmitFromTotals)
+					{
+						int flightCount = flight.FlightCount;
+						string glider = flight.Glider;
+						int minutes = flight.Minutes;
+						int hours = flight.Hours;
+
+						if (gliderTotals.TryGetValue(glider, out (int, int, int) value))
+						{
+							int subMins = minutes + value.Item2;
+							int subHours = hours + value.Item1;
+							if (subMins > 60)
+							{
+								subHours++;
+								subMins -= 60;
+							}
+							gliderTotals[glider] = (subHours, subMins, flightCount + value.Item3);
+						}
+						else
+						{
+							gliderTotals.Add(glider, (hours, minutes, flightCount));
+						}
+					}
+				}
+			});
+
+			return gliderTotals;
+		}
 	}
 }
