@@ -7,6 +7,14 @@
              x:DataType="vm:FlightListViewModel"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
+    <ContentPage.Resources>
+        <Style x:Key="FlightListStyle" TargetType="Grid">
+            <Setter Property="BackgroundColor" Value="#404040"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="5,1"/>
+        </Style>
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="auto, *">
         <Grid Margin="5,10,5,10" ColumnDefinitions=".50*, .50*, .50*">
             <Button Text="Add Flight" Command="{Binding AddFlightCommand}"/>
@@ -15,10 +23,11 @@
         </Grid>
 
         <CollectionView
+            x:Name="FlightCollectionView"
             VerticalOptions="Fill"
             ItemsSource="{Binding Flights}"
             SelectionMode="None"
-             Grid.Row="1">
+            Grid.Row="1">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:FlightEntryModel">
                     <SwipeView>
@@ -30,12 +39,15 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Border Padding="12" Margin="5,1">
+                        <Border Style="{StaticResource FlightListStyle}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FlightListViewModel}}, Path=EditFlightCommand}" CommandParameter="{Binding .}"/>
                             </Border.GestureRecognizers>
                             <VerticalStackLayout>
-                                <Grid RowDefinitions="auto, auto, auto" ColumnDefinitions="auto, *">
+                                <Grid RowDefinitions="auto, auto, auto" ColumnDefinitions="auto, *" >
                                     <HorizontalStackLayout>
                                         <Label Text="Date: "/>
                                         <Label Text="{Binding DateTime, StringFormat='{0:MM/dd/yy hh:mm tt}'}"/>

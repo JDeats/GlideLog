@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GlideLog.Models;
@@ -10,16 +9,20 @@ namespace GlideLog.ViewModels
 {
     public partial class FlightListViewModel : ObservableObject
     {
-        private FlightListModel _flightListModel;
-		private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private readonly FlightListModel _flightListModel;
+		private readonly CancellationTokenSource _cancellationTokenSource = new();
 		private bool _firstLoad = true;
+
+		public int ScrollPosition { get; set; }
+
+		public Action<int> ScrollToItemAction { get; set; }
 
 		[ObservableProperty]
         public partial ObservableCollection<FlightEntryModel> Flights { get; set; }
 
         public FlightListViewModel(FlightListModel flightListModel)
         {
-            Flights = new();
+            Flights = [];
             _flightListModel = flightListModel;
 		}
 
@@ -35,19 +38,20 @@ namespace GlideLog.ViewModels
             {
 				if (_firstLoad) 
 				{
-					string message = $"Loading Flights";
-					var toast = Toast.Make(message);
-					await toast.Show(_cancellationTokenSource.Token);
+					await HandleToast("Loading Flights");
 					_firstLoad = false;
 				}
 				List<FlightEntryModel> dbFlights = await _flightListModel.GetFlightsFromDataBase();
 				UpdateFlightsCollection(dbFlights);
+				if (!_firstLoad)
+				{
+					ScrollToItemAction.Invoke(ScrollPosition);
+				}
+				
             }
             catch(Exception ex)
             {
-				string message = $"Failed To Load Flights From the Database: {ex.Message}";
-				var toast = Toast.Make(message);
-				await toast.Show(_cancellationTokenSource.Token);
+				await HandleToast($"Failed To Load Flights From the Database: {ex.Message}");
 			}
         }
 
@@ -85,22 +89,25 @@ namespace GlideLog.ViewModels
 
                     if (await _flightListModel.ExportFromDatabaseAsync())
                     {
-						string message = $"Successfully Exported the Glide Log";
-						await Toast.Make(message).Show(_cancellationTokenSource.Token);
+						await HandleToast("Successfully Exported the Glide Log");
 					}
                     else
                     {
-						string message = $"Failed To Export the Glide Log";
-						await Toast.Make(message).Show(_cancellationTokenSource.Token);
+						await HandleToast("Failed To Export the Glide Log");
 					}
 				//}
 			}
 			catch (Exception ex)
 			{
-				string message = $"Failed To Export the Glide Log: {ex.Message}";
-				var toast = Toast.Make(message);
-				await toast.Show(_cancellationTokenSource.Token);
+				await HandleToast($"Failed To Export the Glide Log: {ex.Message}");
 			}
+		}
+
+		private async Task HandleToast(string message)
+		{
+			_cancellationTokenSource.TryReset();
+			var toast = Toast.Make(message);
+			await toast.Show(_cancellationTokenSource.Token);
 		}
 
 		[RelayCommand]
@@ -124,16 +131,14 @@ namespace GlideLog.ViewModels
             }
             catch (Exception ex)
             {
-				string message = $"Failed To Import Glide Log: {ex.Message}";
-				var toast = Toast.Make(message);
-				await toast.Show(_cancellationTokenSource.Token);
+				await HandleToast($"Failed To Import Glide Log: {ex.Message}");
 			}
 		}
 
         public void UpdateFlightsCollection(List<FlightEntryModel> flightEntryModels)
         {
-            List<FlightEntryModel> ordered = flightEntryModels.OrderByDescending(x => x.DateTime).ToList();
-            Flights.Clear();
+			List<FlightEntryModel> ordered = [.. flightEntryModels.OrderByDescending(x => x.DateTime)];
+			Flights.Clear();
 			foreach (FlightEntryModel flight in ordered)
 			{
 				Flights.Add(flight);
