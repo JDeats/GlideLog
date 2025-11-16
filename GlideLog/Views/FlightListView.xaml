@@ -15,12 +15,12 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="auto, *">
-        <Grid Margin="5,10,5,10" ColumnDefinitions=".50*, .50*, .50*">
+    <Grid RowDefinitions="*">
+        <!--Grid Margin="5,10,5,10" ColumnDefinitions=".50*, .50*, .50*">
             <Button Text="Add Flight" Command="{Binding AddFlightCommand}"/>
             <Button Text="Import Log" Command="{Binding ImportCommand}" Grid.Column="1" Margin="5,0"/>
             <Button Text="Export Log" Command="{Binding ExportCommand}" Grid.Column="2"/>
-        </Grid>
+        </Grid-->
 
         <CollectionView
             x:Name="FlightCollectionView"

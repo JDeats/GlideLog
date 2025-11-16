@@ -5,8 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:GlideLog"
     xmlns:views="clr-namespace:GlideLog.Views"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:vm="clr-namespace:GlideLog.ViewModels"
+    Shell.FlyoutBehavior="Flyout"
     Title="GlideLog">
+
+    <MenuFlyoutItem x:Name="ImportLogFlyoutItem" Text="Import Log" Clicked="ImportLogFlyoutItem_Clicked"/>
+    <MenuFlyoutItem x:Name="ExportLogFlyoutItem" Text="Export Log" Clicked="ExportLogFlyoutItem_Clicked"/>
 
     <TabBar>
         <ShellContent

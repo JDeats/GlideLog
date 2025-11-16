@@ -29,8 +29,13 @@ namespace GlideLog.ViewModels
 		[RelayCommand]
 		async Task AddFlight()
         {
-            await Shell.Current.GoToAsync(nameof(AddFlightEntryView));
-        }
+			await Shell.Current.GoToAsync(nameof(AddFlightEntryView));
+		}
+
+		public async Task FireTestToast()
+		{
+			await HandleToast("Test Toast Success");
+		}
 
         public async Task OnAppearingAsync()
         {
@@ -47,8 +52,7 @@ namespace GlideLog.ViewModels
 				{
 					ScrollToItemAction.Invoke(ScrollPosition);
 				}
-				
-            }
+			}
             catch(Exception ex)
             {
 				await HandleToast($"Failed To Load Flights From the Database: {ex.Message}");
@@ -76,8 +80,7 @@ namespace GlideLog.ViewModels
 			await Shell.Current.GoToAsync(nameof(EditFlightEntryView), navigationParameter);
 		}
 
-		[RelayCommand]
-		async Task Export()
+		public async Task ExportAsync()
 		{
 			try
 			{
@@ -110,8 +113,7 @@ namespace GlideLog.ViewModels
 			await toast.Show(_cancellationTokenSource.Token);
 		}
 
-		[RelayCommand]
-        async Task Import()
+        public async Task ImportAsync()
         {
             try
             {
