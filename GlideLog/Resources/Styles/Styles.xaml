@@ -132,6 +132,12 @@
         </Setter>
     </Style>
 
+    <FontImageSource x:Key="IconAdd"
+            Glyph="&#xF109;"
+            FontFamily="FluentSystemIcons-Regular"
+            Color="White"
+            Size="32" />
+
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
         <Setter Property="BorderColor" Value="Transparent"/>

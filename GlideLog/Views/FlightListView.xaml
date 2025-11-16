@@ -84,5 +84,17 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Button
+            ImageSource="{StaticResource IconAdd}" 
+            BackgroundColor="Gray" 
+            CornerRadius="30" 
+            HeightRequest="60" 
+            WidthRequest="60" 
+            VerticalOptions="End" 
+            HorizontalOptions="End"
+            Margin="30" 
+            SemanticProperties.Description="Add" 
+            Grid.Row="2"
+            Command="{Binding AddFlightCommand}"/>
     </Grid>
 </ContentPage>
