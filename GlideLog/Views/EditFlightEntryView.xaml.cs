@@ -17,4 +17,14 @@ public partial class EditFlightEntryView : ContentPage
 	{
 		await _editFlightEntryViewModel.OnAppearingAsync();
 	}
+
+	private async void SitePicker_Unfocused(object sender, FocusEventArgs e)
+	{
+		await _editFlightEntryViewModel.SitePickerClosed();
+	}
+
+	private async void GliderPicker_Unfocused(object sender, FocusEventArgs e)
+	{
+		await _editFlightEntryViewModel.GliderPickerClosed();
+	}
 }

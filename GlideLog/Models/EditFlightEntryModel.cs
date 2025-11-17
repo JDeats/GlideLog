@@ -1,4 +1,5 @@
 ﻿using GlideLog.Data;
+using System.Diagnostics;
 
 namespace GlideLog.Models
 {

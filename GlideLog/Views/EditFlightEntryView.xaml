@@ -4,7 +4,6 @@
              x:Class="GlideLog.Views.EditFlightEntryView"
              xmlns:vm="clr-namespace:GlideLog.ViewModels"
              x:DataType="vm:EditFlightEntryViewModel"
-             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="Edit Flight">
 
     <VerticalStackLayout HorizontalOptions="Center">
@@ -20,14 +19,14 @@
         <Border Padding="5">
             <HorizontalStackLayout>
                 <Label Text="Site:" VerticalOptions="Center" Margin="0,0,5,0"/>
-                <Entry Text="{Binding Site}" WidthRequest="235"/>
+                <Picker x:Name="SitePicker" Title="Select a Site" ItemsSource="{Binding Sites}" SelectedItem="{Binding Site}" MinimumWidthRequest="235" Unfocused="SitePicker_Unfocused"/>
             </HorizontalStackLayout>
         </Border>
 
         <Border Padding="5">
             <HorizontalStackLayout>
                 <Label Text="Glider:" VerticalOptions="Center" Margin="0,0,5,0"/>
-                <Entry Text="{Binding Glider}" WidthRequest="218"/>
+                <Picker x:Name="GliderPicker" Title="Select a Glider" ItemsSource="{Binding Gliders}" SelectedItem="{Binding Glider}" MinimumWidthRequest="235" Unfocused="GliderPicker_Unfocused"/>
             </HorizontalStackLayout>
         </Border>
 
