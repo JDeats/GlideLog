@@ -18,6 +18,11 @@ namespace GlideLog.Models
 			cts = new();
 		}
 
+		public async Task<bool> ClearFlightsFromDatabase()
+		{
+			return await _database.ClearFlights();
+		}
+
 		public async Task<List<FlightEntryModel>> GetFlightsFromDataBase()
 		{
 			return await _database.GetFlightsAsync();

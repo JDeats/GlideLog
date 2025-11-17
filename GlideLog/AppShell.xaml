@@ -9,8 +9,33 @@
     Shell.FlyoutBehavior="Flyout"
     Title="GlideLog">
 
-    <MenuFlyoutItem x:Name="ImportLogFlyoutItem" Text="Import Log" Clicked="ImportLogFlyoutItem_Clicked"/>
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid Padding="15,10" Margin="5,5" BackgroundColor="Transparent">
+                <Label Text="{Binding Text}" 
+                   FontSize="18"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                   VerticalOptions="Center"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+
+    <Shell.FlyoutHeader>
+        <Grid Padding="20">
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label Text="GlideLog" 
+                   FontSize="28" 
+                   FontAttributes="Bold"
+                   TextColor="White"/>
+                <Label Text="by Jared Deaton" 
+                   FontSize="14" 
+                   TextColor="White"/>
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+    <MenuFlyoutItem x:Name="ImportLogFlyoutItem" Text="Import Log" Clicked="ImportLogFlyoutItem_Clicked" />
     <MenuFlyoutItem x:Name="ExportLogFlyoutItem" Text="Export Log" Clicked="ExportLogFlyoutItem_Clicked"/>
+    <MenuFlyoutItem x:Name="ClearFlightsFlyoutItem" Text="Clear Flights" Clicked="ClearFlightsFlyoutItem_Clicked"/>
 
     <TabBar>
         <ShellContent

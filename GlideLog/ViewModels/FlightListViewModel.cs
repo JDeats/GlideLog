@@ -37,27 +37,18 @@ namespace GlideLog.ViewModels
 			await HandleToast("Test Toast Success");
 		}
 
-        public async Task OnAppearingAsync()
-        {
-            try
-            {
-				if (_firstLoad) 
-				{
-					await HandleToast("Loading Flights");
-					_firstLoad = false;
-				}
-				List<FlightEntryModel> dbFlights = await _flightListModel.GetFlightsFromDataBase();
-				UpdateFlightsCollection(dbFlights);
-				if (!_firstLoad)
-				{
-					ScrollToItemAction.Invoke(ScrollPosition);
-				}
+		public async Task ClearFlights()
+		{
+			if (await _flightListModel.ClearFlightsFromDatabase())
+			{
+				Flights.Clear();
+				await HandleToast("Successfully cleared all flights");
 			}
-            catch(Exception ex)
-            {
-				await HandleToast($"Failed To Load Flights From the Database: {ex.Message}");
+			else
+			{
+				await HandleToast("Failed to clear all flights");
 			}
-        }
+		}
 
         [RelayCommand]
 		async Task DeleteFlight(FlightEntryModel flightEntryModel)
@@ -137,7 +128,29 @@ namespace GlideLog.ViewModels
 			}
 		}
 
-        public void UpdateFlightsCollection(List<FlightEntryModel> flightEntryModels)
+		public async Task OnAppearingAsync()
+		{
+			try
+			{
+				if (_firstLoad)
+				{
+					await HandleToast("Loading Flights");
+					_firstLoad = false;
+				}
+				List<FlightEntryModel> dbFlights = await _flightListModel.GetFlightsFromDataBase();
+				UpdateFlightsCollection(dbFlights);
+				if (!_firstLoad)
+				{
+					ScrollToItemAction.Invoke(ScrollPosition);
+				}
+			}
+			catch (Exception ex)
+			{
+				await HandleToast($"Failed To Load Flights From the Database: {ex.Message}");
+			}
+		}
+
+		public void UpdateFlightsCollection(List<FlightEntryModel> flightEntryModels)
         {
 			List<FlightEntryModel> ordered = [.. flightEntryModels.OrderByDescending(x => x.DateTime)];
 			Flights.Clear();

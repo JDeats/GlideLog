@@ -13,6 +13,26 @@ namespace GlideLog
 			Routing.RegisterRoute(nameof(EditFlightEntryView), typeof(EditFlightEntryView));
 		}
 
+		private async void ClearFlightsFlyoutItem_Clicked(object sender, EventArgs e)
+		{
+			try
+			{
+				bool answer = await DisplayAlert("Confirm", "Do you really want to delete all your flight logs?", "Yes", "No");
+				if (answer)
+				{
+					var viewModel = App.Current?.Handler.MauiContext?.Services.GetService<FlightListViewModel>();
+					if (viewModel != null)
+					{
+						await viewModel!.ClearFlights();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				string message = ex.Message;
+			}
+		}
+
 		private async void ImportLogFlyoutItem_Clicked(object sender, EventArgs e)
 		{
 			try

@@ -1,10 +1,7 @@
-﻿using GlideLog.Models;
+﻿using CommunityToolkit.Maui.Alerts;
+using GlideLog.Models;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static SQLite.SQLite3;
 
 namespace GlideLog.Data
 {
@@ -17,13 +14,43 @@ namespace GlideLog.Data
 
         }
 
+		public async Task<bool> ClearFlights()
+		{
+			bool success = false;
+			if (Database is not null)
+			{
+				int test = await Database.DropTableAsync<FlightEntryModel>();
+				if (test > 0)
+				{
+					CreateTableResult result = await Database.CreateTableAsync<FlightEntryModel>();
+					if (result == CreateTableResult.Created || result == CreateTableResult.Migrated)
+					{
+						success = true;
+					}
+					else
+					{
+						var toast = Toast.Make(result.ToString());
+						await toast.Show();
+						await Task.Delay(1000);
+					}
+				}
+				else
+				{
+					var toast = Toast.Make($"Drop table result: {test}");
+					await toast.Show();
+					await Task.Delay(1000);
+				}
+			}
+			return success;
+		}
+
 		async Task Init()
 		{
 			if (Database is not null)
 				return;
 
 			Database = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.Flags);
-			var result = await Database.CreateTableAsync<FlightEntryModel>();
+			await Database.CreateTableAsync<FlightEntryModel>();
 		}
 
 		public async Task<List<FlightEntryModel>> GetFlightsAsync()
