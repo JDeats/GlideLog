@@ -40,11 +40,13 @@
     <TabBar>
         <ShellContent
             Title="Flight List"
+            Icon="paraglider"
             ContentTemplate="{DataTemplate views:FlightListView}"
             Route="FlightView" />
 
         <ShellContent
             Title="Totals"
+            Icon="barchart"
             ContentTemplate="{DataTemplate views:TotalsView}"
             Route="TotalView" />
     </TabBar>
