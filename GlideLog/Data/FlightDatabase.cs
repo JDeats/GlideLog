@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using GlideLog.Models;
 using SQLite;
-using static SQLite.SQLite3;
 
 namespace GlideLog.Data
 {
@@ -19,9 +18,9 @@ namespace GlideLog.Data
 			bool success = false;
 			if (Database is not null)
 			{
-				int test = await Database.DropTableAsync<FlightEntryModel>();
-				if (test > 0)
+				try
 				{
+					await Database.DropTableAsync<FlightEntryModel>();
 					CreateTableResult result = await Database.CreateTableAsync<FlightEntryModel>();
 					if (result == CreateTableResult.Created || result == CreateTableResult.Migrated)
 					{
@@ -31,14 +30,14 @@ namespace GlideLog.Data
 					{
 						var toast = Toast.Make(result.ToString());
 						await toast.Show();
-						await Task.Delay(1000);
+						await Task.Delay(3000);
 					}
 				}
-				else
+				catch (Exception ex)
 				{
-					var toast = Toast.Make($"Drop table result: {test}");
+					var toast = Toast.Make(ex.Message);
 					await toast.Show();
-					await Task.Delay(1000);
+					await Task.Delay(3000);
 				}
 			}
 			return success;

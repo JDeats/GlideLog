@@ -6,11 +6,11 @@
              xmlns:models="clr-namespace:GlideLog.Models"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:TotalsViewModel">
-    
-    <ListView ItemsSource="{Binding TotalsByMonth}" SelectionMode="None" Margin="0,20,0,0">
-        <ListView.ItemTemplate>
+
+    <CollectionView ItemsSource="{Binding TotalsByMonth}" SelectionMode="None">
+        <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="models:TotalsByMonthModel">
-                <ViewCell>
+                <Border Padding="8" Margin="0,0,0,2">
                     <Grid VerticalOptions="Center" ColumnSpacing="0" HorizontalOptions="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="140" />
@@ -28,8 +28,8 @@
                         <Label Text="{Binding TotalHours, StringFormat='{0:D2}:'}" Grid.Column="4"/>
                         <Label Text="{Binding TotalMinutes, StringFormat='{0:D2}'}" Grid.Column="5"/>
                     </Grid>
-                </ViewCell>
+                </Border>
             </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentView>

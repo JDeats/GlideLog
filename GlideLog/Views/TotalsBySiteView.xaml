@@ -7,10 +7,18 @@
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:TotalsViewModel">
 
-    <ListView ItemsSource="{Binding TotalsBySite}" SelectionMode="None" Margin="0,20,0,0">
-        <ListView.ItemTemplate>
+    <ContentView.Resources>
+        <Style TargetType="Border">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle 5"/>
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray925}}"/>
+        </Style>
+    </ContentView.Resources>
+
+    <CollectionView ItemsSource="{Binding TotalsBySite}" SelectionMode="None">
+        <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="models:TotalsBySiteModel">
-                <ViewCell>
+                <Border Padding="8" Margin="0,0,0,2">
                     <Grid VerticalOptions="Center" ColumnSpacing="0" HorizontalOptions="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="160" />
@@ -28,8 +36,8 @@
                         <Label Text="{Binding TotalHours, StringFormat='{0:D2}:'}" Grid.Column="4"/>
                         <Label Text="{Binding TotalMinutes, StringFormat='{0:D2}'}" Grid.Column="5"/>
                     </Grid>
-                </ViewCell>
+                </Border>
             </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentView>

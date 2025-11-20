@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using GlideLog.Models;
 using GlideLog.Views;
+using Microsoft.Maui.Controls.Shapes;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using static GlideLog.ViewModels.UserEntryPopupViewModel;
@@ -156,14 +157,24 @@ namespace GlideLog.ViewModels
 		{
             try
             {
-                switch (entryPopupType)
+				var options = new PopupOptions
+				{
+					Shape = new RoundRectangle
+					{
+						CornerRadius = new CornerRadius(12),
+						Stroke = Colors.Transparent,
+						StrokeThickness = 0,
+					}
+				};
+
+				switch (entryPopupType)
                 {
                     case EntryPopupType.Site:
 						var siteParameters = new Dictionary<string, object>
 						{
 							[nameof(UserEntryPopupViewModel.EntryLabel)] = "Site:"
 						};
-						IPopupResult<string>? siteResult = (IPopupResult<string>?)await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current, options: null, siteParameters);
+						IPopupResult<string>? siteResult = (IPopupResult<string>?)await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current, options, siteParameters);
 						if (siteResult != null && !string.IsNullOrEmpty(siteResult.Result))
 						{
 							Sites.Add(siteResult.Result);
@@ -176,7 +187,7 @@ namespace GlideLog.ViewModels
 						{
 							[nameof(UserEntryPopupViewModel.EntryLabel)] = "Glider:"
 						};
-						IPopupResult<string>? gliderResult = (IPopupResult<string>?)await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current, options: null, gliderParameters);
+						IPopupResult<string>? gliderResult = (IPopupResult<string>?)await _popupService.ShowPopupAsync<UserEntryPopupViewModel>(Shell.Current, options, gliderParameters);
 						if (gliderResult != null && !string.IsNullOrEmpty(gliderResult.Result))
 						{
 							Gliders.Add(gliderResult.Result);
